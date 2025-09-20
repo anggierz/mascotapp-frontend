@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Input } from "@/src/components/Input";
 import { Button } from "@/src/components/Button";
-import { Ionicons } from '@react-native-vector-icons/ionicons'
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function WelcomeScreen() {
   return (
@@ -11,16 +11,14 @@ export default function WelcomeScreen() {
         <Text style={styles.title}>Mascotapp</Text>
       </View>
 
-
       <Input placeholder="Email" style={styles.input} />
       <Input placeholder="Contraseña" secureTextEntry style={styles.input} />
 
-
       <Button title="Login" onPress={() => {}} style={styles.buttonPrimary} />
       <Button title="Registro" onPress={() => {}} style={styles.buttonSecondary} />
-      
+
       <Text style={styles.forgotPassword} onPress={() => {}}>
-        Has olvidado tu contraseña?
+        ¿Has olvidado tu contraseña?
       </Text>
     </View>
   );
@@ -46,12 +44,13 @@ const styles = StyleSheet.create({
     fontSize: 36,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#5E60CE", // morado intenso
+    color: "#5E60CE",
   },
   input: {
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#4895EF",
+    borderRadius: 12, 
     paddingHorizontal: 12,
     paddingVertical: 10,
     marginBottom: 15,
@@ -61,12 +60,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#3A0CA3",
   },
   buttonSecondary: {
-    backgroundColor: "#4361EE", 
+    backgroundColor: "#4361EE",
   },
   forgotPassword: {
     marginTop: 10,
     textAlign: "center",
-    color: "#5E60CE", 
+    color: "#5E60CE",
     fontSize: 14,
     textDecorationLine: "underline",
   },
