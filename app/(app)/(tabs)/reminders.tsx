@@ -1,5 +1,5 @@
 
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Platform } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { useReminders } from "@/src/hooks/useReminders";
@@ -60,11 +60,24 @@ export default function RemindersScreen() {
         <Ionicons name="add" size={28} color="#fff" />
       </TouchableOpacity>
       <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
-        <ReminderForm
-          initial={editReminder}
-          onSubmit={editReminder ? handleEdit : handleAdd}
-          onCancel={() => { setEditReminder(null); setModalVisible(false); }}
-        />
+        <View style={{ flex: 1, backgroundColor: '#F0F4FF' }}>
+          {Platform.OS === 'ios' && (
+            <View style={{ paddingTop: 48, paddingHorizontal: 24, backgroundColor: '#F0F4FF', borderBottomWidth: 1, borderBottomColor: '#eee' }}>
+              <TouchableOpacity
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+                onPress={() => { setEditReminder(null); setModalVisible(false); }}
+              >
+                <Ionicons name="arrow-back" size={24} color="#3A0CA3" style={{ marginRight: 8 }} />
+                <Text style={{ color: '#3A0CA3', fontSize: 16, fontWeight: 'bold' }}>Volver</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <ReminderForm
+            initial={editReminder}
+            onSubmit={editReminder ? handleEdit : handleAdd}
+            onCancel={() => { setEditReminder(null); setModalVisible(false); }}
+          />
+        </View>
       </Modal>
     </View>
   );
