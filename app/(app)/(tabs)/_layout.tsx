@@ -2,6 +2,7 @@ import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Theme } from "@/constants/theme";
 
 export default function TabsLayout() {
   return (
@@ -9,9 +10,9 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: "#3A0CA3",
-          tabBarInactiveTintColor: "#999",
-          tabBarStyle: styles.tabBar,
+          tabBarActiveTintColor: Theme.colors.primary,
+          tabBarInactiveTintColor: Theme.colors.secondary,
+          tabBarStyle: [styles.tabBar, { backgroundColor: Theme.colors.black }],
           tabBarLabelStyle: styles.tabBarLabel,
         }}
       >
@@ -59,16 +60,18 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F0F4FF",
+    backgroundColor: Theme.colors.background,
   },
   tabBar: {
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.black,
     borderTopWidth: 0,
     elevation: 4,
     height: 60,
     paddingBottom: 5,
+    borderTopColor: Theme.colors.border,
   },
   tabBarLabel: {
     fontSize: 12,
+    color: Theme.colors.primary,
   },
 });

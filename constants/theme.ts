@@ -16,5 +16,6 @@ export const Theme = {
     card: Palette.white,
     border: Palette.orange,
     error: Palette.red,
+    black: Palette.black,
   },
 };
