@@ -1,7 +1,7 @@
-
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { CalendarPicker } from "@/src/components/CalendarPicker";
 import { useCalendarEvents } from "@/src/hooks/useCalendarEvents";
+import { Theme } from "@/constants/theme";
 
 export default function CalendarScreen() {
   const {
@@ -36,22 +36,22 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F0F4FF" },
+  container: { flex: 1, backgroundColor: Theme.colors.background },
   scrollContent: { padding: 16 },
-  title: { fontSize: 24, fontWeight: "bold", color: "#3A0CA3", marginBottom: 20 },
-  subtitle: { fontSize: 18, fontWeight: "600", marginBottom: 12, color: "#4361EE" },
+  title: { fontSize: 24, fontWeight: "bold", color: Theme.colors.primary, marginBottom: 20 },
+  subtitle: { fontSize: 18, fontWeight: "600", marginBottom: 12, color: Theme.colors.text },
   eventCard: {
-    backgroundColor: "#FFF",
+    backgroundColor: Theme.colors.card,
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
-    shadowColor: "#000",
+    shadowColor: Theme.colors.border,
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
     elevation: 3,
   },
-  eventTitle: { fontSize: 16, fontWeight: "bold", color: "#3A0CA3" },
-  eventTime: { fontSize: 14, color: "#4895EF", marginTop: 4 },
-  eventDesc: { fontSize: 14, color: "#555", marginTop: 2 },
+  eventTitle: { fontSize: 16, fontWeight: "bold", color: Theme.colors.primary },
+  eventTime: { fontSize: 14, color: Theme.colors.accent, marginTop: 4 },
+  eventDesc: { fontSize: 14, color: Theme.colors.text, marginTop: 2 },
 });

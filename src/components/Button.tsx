@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   text: {
-  color: Theme.colors.card,
+  color: Theme.colors.textBlack,
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 16,
