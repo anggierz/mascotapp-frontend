@@ -1,6 +1,6 @@
 export const Palette = {
   blackNight: "#0C1713",
-  raspberryRose: "#AB4967",
+  raspberryRose: "#d88a1cff",
   chinaRose: "#A04668",
   puce: "#BC8DA0",
   lavender: "#D9D0DE",

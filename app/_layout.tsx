@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Theme } from "@/constants/theme";
 
 export default function RootLayout() {
   return (
@@ -17,6 +18,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F0F4FF", 
+  backgroundColor: Theme.colors.background, 
   },
 });

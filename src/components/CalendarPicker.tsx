@@ -1,5 +1,6 @@
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { StyleSheet, View } from "react-native";
+import { Theme } from "@/constants/theme";
 
 // https://github.com/wix/react-native-calendars/issues/169 hay mejor manera?
 LocaleConfig.locales['es'] = {
@@ -34,11 +35,11 @@ export function CalendarPicker({ selectedDate, markedDates, onDayPress }: Calend
         onDayPress={onDayPress}
         markedDates={markedDates}
         theme={{
-          selectedDayBackgroundColor: "#4895EF",
-          todayTextColor: "#3A0CA3",
-          arrowColor: "#3A0CA3",
-          dotColor: "#3A0CA3",
-          textSectionTitleColor: "#3A0CA3",
+          selectedDayBackgroundColor: Theme.colors.primary,
+          todayTextColor: Theme.colors.primary,
+          arrowColor: Theme.colors.primary,
+          dotColor: Theme.colors.primary,
+          textSectionTitleColor: Theme.colors.primary,
         }}
       />
     </View>
@@ -47,11 +48,11 @@ export function CalendarPicker({ selectedDate, markedDates, onDayPress }: Calend
 
 const styles = StyleSheet.create({
   calendarWrapper: {
-    backgroundColor: "#FFF",
+  backgroundColor: Theme.colors.card,
     borderRadius: 16,
     marginBottom: 30,
     borderWidth: 1,
-    borderColor: "#4895EF",
+  borderColor: Theme.colors.primary,
     overflow: "hidden",
     padding: 8,
   },

@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { KeyboardAwareScreen } from "@/src/components/KeyboardAwareScreen";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Theme } from "@/constants/theme";
 
 export default function AuthLayout() {
   return (
@@ -20,6 +21,6 @@ export default function AuthLayout() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F0F4FF",
+    backgroundColor: Theme.colors.background,
   },
 });
