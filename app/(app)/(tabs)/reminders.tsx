@@ -1,5 +1,6 @@
 
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Platform } from "react-native";
+import { Theme } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { useReminders } from "@/src/hooks/useReminders";
@@ -26,7 +27,7 @@ export default function RemindersScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recordatorios Activos</Text>
+  <Text style={styles.title}>Recordatorios Activos</Text>
       <FlatList
         data={reminders}
         keyExtractor={(item) => item.id}
@@ -42,7 +43,7 @@ export default function RemindersScreen() {
             <Ionicons
               name={item.isRecurrent ? "notifications" : "calendar"}
               size={28}
-              color="#3A0CA3"
+              color={Theme.colors.primary}
               style={styles.icon}
             />
             <View style={{ flex: 1 }}>
@@ -51,24 +52,24 @@ export default function RemindersScreen() {
               <Text style={styles.detail}>{item.isRecurrent ? `Recurrente cada ${item.frequency} ${item.every}(s)` : `Fecha: ${item.date?.replace('T', ' ')}`}</Text>
             </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id)}>
-              <Ionicons name="trash" size={22} color="#E63946" />
+              <Ionicons name="trash" size={22} color={Theme.colors.error} />
             </TouchableOpacity>
           </TouchableOpacity>
         )}
       />
       <TouchableOpacity style={styles.fab} onPress={() => { setEditReminder(null); setModalVisible(true); }}>
-        <Ionicons name="add" size={28} color="#fff" />
+        <Ionicons name="add" size={28} color={Theme.colors.card} />
       </TouchableOpacity>
       <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
-        <View style={{ flex: 1, backgroundColor: '#F0F4FF' }}>
+        <View style={{ flex: 1, backgroundColor: Theme.colors.background }}>
           {Platform.OS === 'ios' && (
-            <View style={{ paddingTop: 48, paddingHorizontal: 24, backgroundColor: '#F0F4FF', borderBottomWidth: 1, borderBottomColor: '#eee' }}>
+            <View style={{ paddingTop: 48, paddingHorizontal: 24, backgroundColor: Theme.colors.background, borderBottomWidth: 1, borderBottomColor: Theme.colors.border }}>
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={() => { setEditReminder(null); setModalVisible(false); }}
               >
-                <Ionicons name="arrow-back" size={24} color="#3A0CA3" style={{ marginRight: 8 }} />
-                <Text style={{ color: '#3A0CA3', fontSize: 16, fontWeight: 'bold' }}>Volver</Text>
+                <Ionicons name="arrow-back" size={24} color={Theme.colors.primary} style={{ marginRight: 8 }} />
+                <Text style={{ color: Theme.colors.primary, fontSize: 16, fontWeight: 'bold' }}>Volver</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -84,27 +85,27 @@ export default function RemindersScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F0F4FF" },
-  title: { fontSize: 24, fontWeight: "bold", color: "#3A0CA3", margin: 16 },
+  container: { flex: 1, backgroundColor: Theme.colors.background },
+  title: { fontSize: 24, fontWeight: "bold", color: Theme.colors.primary, margin: 16, textAlign: "center", letterSpacing: 0.5 },
   list: { padding: 8 },
   card: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
     elevation: 3,
   },
   icon: { marginRight: 12 },
-  name: { fontSize: 18, fontWeight: "600", color: "#333" },
-  type: { fontSize: 14, color: "#4895EF" },
-  detail: { fontSize: 13, color: "#555" },
+  name: { fontSize: 18, fontWeight: "600", color: Theme.colors.text },
+  type: { fontSize: 14, color: Theme.colors.primary },
+  detail: { fontSize: 13, color: Theme.colors.text },
   fab: {
     position: "absolute",
     right: 20,
     bottom: 20,
-    backgroundColor: "#3A0CA3",
+    backgroundColor: Theme.colors.primary,
     borderRadius: 50,
     padding: 16,
     elevation: 5,
