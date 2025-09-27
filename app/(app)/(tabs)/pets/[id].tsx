@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Theme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { getPetById, deletePet } from "@/src/features/pets/services";
 
@@ -44,21 +45,21 @@ export default function PetDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, backgroundColor: "#F0F4FF" },
-  error: { fontSize: 18, color: "red", textAlign: "center", marginTop: 40 },
-  title: { fontSize: 28, fontWeight: "bold", color: "#3A0CA3", marginBottom: 20 },
-  label: { fontSize: 18, color: "#333", marginBottom: 10 },
+  container: { flex: 1, padding: 24, backgroundColor: Theme.colors.background },
+  error: { fontSize: 18, color: Theme.colors.error, textAlign: "center", marginTop: 40 },
+  title: { fontSize: 28, fontWeight: "bold", color: Theme.colors.primary, marginBottom: 20, textAlign: "center", letterSpacing: 0.5 },
+  label: { fontSize: 18, color: Theme.colors.text, marginBottom: 10 },
   buttonPrimary: {
-    backgroundColor: "#3A0CA3",
+    backgroundColor: Theme.colors.primary,
     padding: 12,
     borderRadius: 8,
     marginTop: 20,
   },
   buttonDanger: {
-    backgroundColor: "red",
+    backgroundColor: Theme.colors.error,
     padding: 12,
     borderRadius: 8,
     marginTop: 10,
   },
-  buttonText: { color: "#fff", textAlign: "center", fontWeight: "bold" },
+  buttonText: { color: Theme.colors.card, textAlign: "center", fontWeight: "bold" },
 });

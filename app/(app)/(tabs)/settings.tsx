@@ -1,6 +1,7 @@
 
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Theme } from "@/constants/theme";
 import { useUserSettings } from "@/src/hooks/useUserSettings";
 
 export default function SettingsScreen() {
@@ -9,7 +10,7 @@ export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.avatarWrapper}>
-        <Ionicons name="person-circle" size={100} color="#3A0CA3" />
+        <Ionicons name="person-circle" size={100} color={Theme.colors.primary} />
       </View>
       <Text style={styles.name}>{user.name} {user.lastname}</Text>
       <TextInput
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#F0F4FF",
+    backgroundColor: Theme.colors.background,
     padding: 24,
   },
   avatarWrapper: {
@@ -42,29 +43,31 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#3A0CA3",
+    color: Theme.colors.primary,
     marginBottom: 12,
     textAlign: "center",
   },
   email: {
     width: 260,
-    backgroundColor: "#e6e6e6",
+    backgroundColor: Theme.colors.card,
     borderRadius: 10,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 16,
-    color: "#888",
+    color: Theme.colors.text,
     marginBottom: 32,
     textAlign: "center",
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
   },
   signOutBtn: {
-    backgroundColor: "#E63946",
+    backgroundColor: Theme.colors.primary,
     paddingVertical: 14,
     paddingHorizontal: 40,
     borderRadius: 10,
   },
   signOutText: {
-    color: "#fff",
+    color: Theme.colors.card,
     fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",

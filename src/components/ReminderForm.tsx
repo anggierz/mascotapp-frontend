@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform } from "react-native";
+import { Theme } from "@/constants/theme";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Reminder, ReminderType } from "@/src/features/reminders/services";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -43,23 +44,23 @@ export function ReminderForm({ initial, onSubmit, onCancel }: ReminderFormProps)
       <Text style={styles.label}>Tipo</Text>
       <View style={styles.typeRow}>
         <TouchableOpacity style={[styles.typeBtn, type === "vet" && styles.typeBtnActive]} onPress={() => setType("vet")}> 
-          <Ionicons name="heart-half-outline" size={20} color={type === "vet" ? "#fff" : "#3A0CA3"} />
+          <Ionicons name="heart-half-outline" size={20} color={type === "vet" ? Theme.colors.card : Theme.colors.primary} />
           <Text style={[styles.typeBtnText, type === "vet" && styles.typeBtnTextActive]}>Veterinario</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.typeBtn, type === "deworming" && styles.typeBtnActive]} onPress={() => setType("deworming")}> 
-          <Ionicons name="bug" size={20} color={type === "deworming" ? "#fff" : "#3A0CA3"} />
+          <Ionicons name="bug" size={20} color={type === "deworming" ? Theme.colors.card : Theme.colors.primary} />
           <Text style={[styles.typeBtnText, type === "deworming" && styles.typeBtnTextActive]}>Desparasitación</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.typeBtn, type === "medication" && styles.typeBtnActive]} onPress={() => setType("medication")}> 
-          <Ionicons name="medkit" size={20} color={type === "medication" ? "#fff" : "#3A0CA3"} />
+          <Ionicons name="medkit" size={20} color={type === "medication" ? Theme.colors.card : Theme.colors.primary} />
           <Text style={[styles.typeBtnText, type === "medication" && styles.typeBtnTextActive]}>Medicación</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.rowSwitch}>
         <Text style={styles.label}>¿Es recurrente?</Text>
-        <TouchableOpacity style={[styles.switch, isRecurrent && styles.switchActive]} onPress={() => setIsRecurrent(!isRecurrent)}>
-          <Text style={styles.switchText}>{isRecurrent ? "Sí" : "No"}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={[styles.switch, isRecurrent && styles.switchActive]} onPress={() => setIsRecurrent(!isRecurrent)}>
+            <Text style={[isRecurrent ? styles.switchActiveText : styles.switchText]}>{isRecurrent ? "Sí" : "No"}</Text>
+          </TouchableOpacity>
       </View>
       {!isRecurrent ? (
         <View>
@@ -120,13 +121,13 @@ export function ReminderForm({ initial, onSubmit, onCancel }: ReminderFormProps)
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F0F4FF", padding: 24 },
-  title: { fontSize: 22, fontWeight: "bold", color: "#3A0CA3", marginBottom: 18 },
-  label: { fontSize: 15, color: "#333", marginBottom: 6, marginTop: 12 },
+  container: { flex: 1, backgroundColor: Theme.colors.background, padding: 24 },
+  title: { fontSize: 22, fontWeight: "bold", color: Theme.colors.primary, marginBottom: 18 },
+  label: { fontSize: 15, color: Theme.colors.text, marginBottom: 6, marginTop: 12 },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     borderWidth: 1,
-    borderColor: "#4895EF",
+    borderColor: Theme.colors.border,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -134,9 +135,9 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   dateDisplay: {
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     borderWidth: 1,
-    borderColor: "#4895EF",
+    borderColor: Theme.colors.border,
     borderRadius: 10,
     paddingHorizontal: 12,
     paddingVertical: 10,
@@ -146,43 +147,49 @@ const styles = StyleSheet.create({
   },
   dateDisplayText: {
     fontSize: 16,
-    color: "#333",
+    color: Theme.colors.text,
   },
   typeRow: { flexDirection: "row", gap: 8, marginBottom: 8 },
   typeBtn: {
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#4895EF",
+    borderColor: Theme.colors.border,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 6,
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
   },
-  typeBtnActive: { backgroundColor: "#3A0CA3", borderColor: "#3A0CA3" },
-  typeBtnText: { marginLeft: 4, color: "#3A0CA3", fontWeight: "600" },
-  typeBtnTextActive: { color: "#fff" },
+  typeBtnActive: { backgroundColor: Theme.colors.primary, borderColor: Theme.colors.primary },
+  typeBtnText: { marginLeft: 4, color: Theme.colors.primary, fontWeight: "600" },
+  typeBtnTextActive: { color: Theme.colors.card },
   rowSwitch: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 12 },
   switch: {
-    backgroundColor: "#e6e6e6",
+      backgroundColor: Theme.colors.card,
     borderRadius: 16,
     paddingHorizontal: 18,
     paddingVertical: 8,
+      borderWidth: 1,
+      borderColor: Theme.colors.border,
   },
-  switchActive: { backgroundColor: "#3A0CA3" },
-  switchText: { color: "#3A0CA3", fontWeight: "bold" },
+    switchActive: { backgroundColor: Theme.colors.primary },
+  switchText: { color: Theme.colors.primary, fontWeight: "bold" },
+    switchActiveText: {
+      color: Theme.colors.card,
+      fontWeight: "bold",
+    },
   freqRow: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 8 },
   freqOpt: {
-    backgroundColor: "#e6e6e6",
+    backgroundColor: Theme.colors.secondary,
     borderRadius: 8,
     paddingHorizontal: 10,
     paddingVertical: 6,
   },
-  freqOptText: { color: "#3A0CA3", fontWeight: "600" },
-  freqOptTextActive: { color: "#fff", backgroundColor: "#3A0CA3", borderRadius: 8, paddingHorizontal: 10, paddingVertical: 6 },
+  freqOptText: { color: Theme.colors.primary, fontWeight: "600" },
+  freqOptTextActive: { color: Theme.colors.card, backgroundColor: Theme.colors.primary, borderRadius: 8, paddingHorizontal: 10, paddingVertical: 6 },
   actionsRow: { flexDirection: "row", justifyContent: "flex-end", gap: 12, marginTop: 18 },
-  cancelBtn: { backgroundColor: "#e6e6e6", borderRadius: 8, paddingHorizontal: 18, paddingVertical: 10 },
-  cancelText: { color: "#3A0CA3", fontWeight: "bold" },
-  saveBtn: { backgroundColor: "#3A0CA3", borderRadius: 8, paddingHorizontal: 18, paddingVertical: 10 },
-  saveText: { color: "#fff", fontWeight: "bold" },
+  cancelBtn: { backgroundColor: Theme.colors.secondary, borderRadius: 8, paddingHorizontal: 18, paddingVertical: 10 },
+  cancelText: { color: Theme.colors.primary, fontWeight: "bold" },
+  saveBtn: { backgroundColor: Theme.colors.primary, borderRadius: 8, paddingHorizontal: 18, paddingVertical: 10 },
+  saveText: { color: Theme.colors.card, fontWeight: "bold" },
 });

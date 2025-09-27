@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { Button } from "@/src/components/Button";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
+import { Theme } from "@/constants/theme";
 
 export default function LandingScreen() {
   const router = useRouter();
@@ -9,7 +10,7 @@ export default function LandingScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Ionicons name="paw" size={50} color="#5E60CE" style={styles.icon} />
+  <Ionicons name="paw" size={50} color={Theme.colors.primary} style={styles.icon} />
         <Text style={styles.title}>Mascotapp</Text>
       </View>
 
@@ -33,11 +34,11 @@ export default function LandingScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24, backgroundColor: "#F0F4FF" },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 24, backgroundColor: Theme.colors.background },
   header: { flexDirection: "row", alignItems: "center", marginBottom: 20 },
   icon: { marginRight: 10 },
-  title: { fontSize: 40, fontWeight: "bold", color: "#5E60CE" },
-  subtitle: { fontSize: 16, color: "#333", marginBottom: 40, textAlign: "center" },
-  buttonPrimary: { backgroundColor: "#3A0CA3", width: "80%", marginBottom: 15 },
-  buttonSecondary: { backgroundColor: "#4361EE", width: "80%" },
+  title: { fontSize: 40, fontWeight: "bold", color: Theme.colors.primary },
+  subtitle: { fontSize: 16, color: Theme.colors.text, marginBottom: 40, textAlign: "center" },
+  buttonPrimary: { backgroundColor: Theme.colors.primary, width: "80%", marginBottom: 15 },
+  buttonSecondary: { backgroundColor: Theme.colors.secondary, width: "80%" },
 });

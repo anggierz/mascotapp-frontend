@@ -1,4 +1,5 @@
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { Theme } from "@/constants/theme";
 
 interface Props {
   title: string;
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   text: {
-    color: "#fff",
+  color: Theme.colors.textBlack,
     fontWeight: "bold",
     textAlign: "center",
     fontSize: 16,

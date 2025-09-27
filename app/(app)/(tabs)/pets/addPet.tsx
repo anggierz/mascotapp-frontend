@@ -18,17 +18,16 @@ import { Input } from "@/src/components/Input";
 import { Button } from "@/src/components/Button";
 import { useRouter } from "expo-router";
 import { addPet } from "@/src/features/pets/services";
+import { Theme } from "@/constants/theme";
 
 export default function AddPetScreen() {
   const router = useRouter();
 
-  // Form state
   const [type, setType] = useState<"dog" | "cat">("dog");
   const [name, setName] = useState("");
   const [birthdate, setBirthdate] = useState<Date>(new Date());
   const [weight, setWeight] = useState("");
 
-  // Modals
   const [typeModalVisible, setTypeModalVisible] = useState(false);
   const [dateModalVisible, setDateModalVisible] = useState(false);
 
@@ -55,7 +54,7 @@ export default function AddPetScreen() {
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"
       >
-        <Text style={styles.title}>Añadir Mascota</Text>
+        {/* <Text style={styles.title}>Añadir Mascota</Text> */}
 
         {/* Tipo */}
         <Text style={styles.label}>Tipo</Text>
@@ -190,83 +189,86 @@ export default function AddPetScreen() {
   );
 }
 
-/* Utils */
+
 function toISODate(d: Date) {
   return d.toISOString().split("T")[0];
 }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  container: { flex: 1, backgroundColor: "#F0F4FF" },
+  container: { flex: 1, backgroundColor: Theme.colors.background },
   content: { padding: 24, paddingBottom: 32 },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#3A0CA3",
+    color: Theme.colors.primary,
     marginBottom: 16,
+    textAlign: "center",
+    letterSpacing: 0.5,
   },
   label: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
+    color: Theme.colors.text,
     marginTop: 12,
     marginBottom: 6,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     borderWidth: 1,
-    borderColor: "#4895EF",
+    borderColor: Theme.colors.primary,
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 10,
     marginBottom: 4,
     fontSize: 16,
+    color: Theme.colors.text,
   },
   selector: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     borderWidth: 1,
-    borderColor: "#4895EF",
+    borderColor: Theme.colors.primary,
     borderRadius: 12,
     paddingHorizontal: 12,
     height: 48,
   },
-  selectorText: { fontSize: 16, color: "#2B2B2B" },
-  buttonPrimary: { backgroundColor: "#3A0CA3", marginTop: 20 },
+  selectorText: { fontSize: 16, color: Theme.colors.text },
+  buttonPrimary: { backgroundColor: Theme.colors.primary, marginTop: 20 },
 
   
   modalOverlay: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.35)",
+    backgroundColor: Theme.colors.black,
     alignItems: "center",
     justifyContent: "center",
     padding: 24,
   },
   modalCard: {
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: Theme.colors.card,
     borderRadius: 16,
     padding: 16,
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#3A0CA3",
+    color: Theme.colors.primary,
     marginBottom: 12,
     textAlign: "center",
   },
   modalOption: {
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#EEE",
+    borderBottomColor: Theme.colors.border,
   },
-  modalOptionText: { fontSize: 16, color: "#2B2B2B" },
+  modalOptionText: { fontSize: 16, color: Theme.colors.text },
   modalCancel: { marginTop: 8, alignSelf: "center" },
-  modalCancelText: { color: "#5E60CE", fontSize: 16, fontWeight: "600" },
+  modalCancelText: { color: Theme.colors.secondary, fontSize: 16, fontWeight: "600" },
 
-  iosPicker: { backgroundColor: "#F8F8F8" },
+  iosPicker: { backgroundColor: Theme.colors.background },
   modalActions: {
     marginTop: 12,
     flexDirection: "row",
@@ -277,14 +279,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 10,
-    backgroundColor: "#E6EAFB",
+    backgroundColor: Theme.colors.secondary,
   },
-  modalBtnSecondaryText: { color: "#3A0CA3", fontWeight: "700" },
+  modalBtnSecondaryText: { color: Theme.colors.primary, fontWeight: "700" },
   modalBtnPrimary: {
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 10,
-    backgroundColor: "#3A0CA3",
+    backgroundColor: Theme.colors.primary,
   },
-  modalBtnPrimaryText: { color: "#fff", fontWeight: "700" },
+  modalBtnPrimaryText: { color: Theme.colors.card, fontWeight: "700" },
 });
