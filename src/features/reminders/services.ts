@@ -9,6 +9,7 @@ export interface Reminder {
   frequency?: number;
   every?: "dia" | "semana" | "mes";
   startTime?: string; // ISO string
+  petId: string;
 }
 
 // TODO: Sustituir mocks por datos persistentes con backend
@@ -19,6 +20,7 @@ let reminders: Reminder[] = [
     type: "vet",
     isRecurrent: false,
     date: "2025-10-01T10:00:00",
+    petId: "1",
   },
   {
     id: "2",
@@ -28,6 +30,7 @@ let reminders: Reminder[] = [
     frequency: 1,
     every: "dia",
     startTime: "2025-09-30T09:00:00",
+    petId: "2",
   },
 ];
 
