@@ -17,7 +17,8 @@ export type Pet = {
 
 //TODO: sustituir mock por datos persistentes con backend
 let pets: Pet[] = [
-  { id: "1", name: "Luna", type: "dog", birthdate: "2022-01-01", weight: 12, diets: [] },
+  { id: "1", name: "Kratos", type: "dog", birthdate: "2014-06-08", weight: 12, diets: [] },
+  { id: "2", name: "Aster", type: "cat", birthdate: "2023-09-17", weight: 5, diets: [] },
 ];
 
 export function getDietsForPet(petId: string): Diet[] {

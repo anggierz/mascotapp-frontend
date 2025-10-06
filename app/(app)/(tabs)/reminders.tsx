@@ -5,6 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { useReminders } from "@/src/hooks/useReminders";
 import { Reminder } from "@/src/features/reminders/services";
+import { getPetById } from "@/src/features/pets/services";
 import { ReminderForm } from "@/src/components/ReminderForm";
 
 export default function RemindersScreen() {
@@ -50,6 +51,12 @@ export default function RemindersScreen() {
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.type}>{item.type === "vet" ? "Visita veterinario" : item.type === "deworming" ? "Desparasitación" : "Medicación"}</Text>
               <Text style={styles.detail}>{item.isRecurrent ? `Recurrente cada ${item.frequency} ${item.every}(s)` : `Fecha: ${item.date?.replace('T', ' ')}`}</Text>
+              <Text style={styles.petName}>
+                {(() => {
+                  const pet = getPetById(item.petId);
+                  return pet ? `Mascota: ${pet.name}` : "";
+                })()}
+              </Text>
             </View>
             <TouchableOpacity onPress={() => deleteReminder(item.id)}>
               <Ionicons name="trash" size={22} color={Theme.colors.error} />
@@ -85,6 +92,7 @@ export default function RemindersScreen() {
 }
 
 const styles = StyleSheet.create({
+  petName: { color: Theme.colors.text, fontSize: 14, fontStyle: "italic", marginTop: 2 },
   container: { flex: 1, backgroundColor: Theme.colors.background },
   title: { fontSize: 24, fontWeight: "bold", color: Theme.colors.primary, margin: 16, textAlign: "center", letterSpacing: 0.5 },
   list: { padding: 8 },

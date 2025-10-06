@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Platform } from "r
 import { Theme } from "@/constants/theme";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Reminder, ReminderType } from "@/src/features/reminders/services";
+import { getPets, Pet } from "@/src/features/pets/services";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useDateTimePickerHandler } from "@/src/hooks/useDateTimePickerHandler";
 
@@ -13,6 +14,8 @@ interface ReminderFormProps {
 }
 
 export function ReminderForm({ initial, onSubmit, onCancel }: ReminderFormProps) {
+  const pets: Pet[] = getPets();
+  const [petId, setPetId] = useState(initial?.petId || (pets[0]?.id ?? ""));
   const [name, setName] = useState(initial?.name || "");
   const [type, setType] = useState<ReminderType>(initial?.type || "vet");
   const [isRecurrent, setIsRecurrent] = useState(initial?.isRecurrent || false);
@@ -28,17 +31,35 @@ export function ReminderForm({ initial, onSubmit, onCancel }: ReminderFormProps)
   const handleStartTimeChange = useDateTimePickerHandler(setStartTime, setShowStartTimePicker);
 
   const handleSubmit = () => {
-    if (!name.trim()) return;
+    if (!name.trim() || !petId) return;
     if (isRecurrent) {
-      onSubmit({ name, type, isRecurrent, frequency, every, startTime: startTime.toISOString() });
+      onSubmit({ name, type, isRecurrent, frequency, every, startTime: startTime.toISOString(), petId });
     } else {
-      onSubmit({ name, type, isRecurrent, date: date.toISOString() });
+      onSubmit({ name, type, isRecurrent, date: date.toISOString(), petId });
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{initial ? "Editar recordatorio" : "Añadir recordatorio"}</Text>
+      
+      <Text style={styles.label}>Mascota</Text>
+      <View style={styles.pickerRow}>
+        {pets.map((pet) => (
+          <TouchableOpacity
+            key={pet.id}
+            style={[styles.petBtn, petId === pet.id && styles.petBtnActive]}
+            onPress={() => setPetId(pet.id)}
+          >
+            <Ionicons
+              name={pet.type === "dog" ? "paw" : "logo-octocat"}
+              size={20}
+              color={petId === pet.id ? Theme.colors.card : Theme.colors.primary}
+            />
+            <Text style={[styles.petBtnText, petId === pet.id && styles.petBtnTextActive]}>{pet.name}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
       <Text style={styles.label}>Nombre</Text>
       <TextInput value={name} onChangeText={setName} style={styles.input} placeholder="Ej: Vacuna anual" />
       <Text style={styles.label}>Tipo</Text>
@@ -164,6 +185,21 @@ const styles = StyleSheet.create({
   typeBtnText: { marginLeft: 4, color: Theme.colors.primary, fontWeight: "600" },
   typeBtnTextActive: { color: Theme.colors.card },
   rowSwitch: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: 12 },
+  pickerRow: { flexDirection: "row", gap: 8, marginBottom: 8 },
+  petBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: Theme.colors.border,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    backgroundColor: Theme.colors.card,
+    marginRight: 6,
+  },
+  petBtnActive: { backgroundColor: Theme.colors.primary, borderColor: Theme.colors.primary },
+  petBtnText: { marginLeft: 4, color: Theme.colors.primary, fontWeight: "600" },
+  petBtnTextActive: { color: Theme.colors.card },
   switch: {
       backgroundColor: Theme.colors.card,
     borderRadius: 16,

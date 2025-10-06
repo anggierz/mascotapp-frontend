@@ -26,7 +26,7 @@ export default function PetsScreen() {
             }
           >
             <Ionicons
-              name="paw"
+              name={item.type === "dog" ? "paw" : "logo-octocat"}
               size={32}
               color={Theme.colors.primary}
               style={styles.icon}
