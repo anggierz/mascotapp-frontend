@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Theme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { getPetById, deletePet, getDietsForPet, deleteDietFromPet, Diet } from "@/src/features/pets/services";
@@ -33,7 +34,16 @@ export default function PetDetailScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{pet.name}</Text>
+      <View style={styles.headerCol}>
+        <View style={styles.iconCircle}>
+          <Ionicons
+            name={pet.type === "dog" ? "paw" : "logo-octocat"}
+            size={40}
+            color={Theme.colors.card}
+          />
+        </View>
+        <Text style={styles.title}>{pet.name}</Text>
+      </View>
       <Text style={styles.label}>Tipo: {pet.type}</Text>
       <Text style={styles.label}>Nacimiento: {pet.birthdate}</Text>
       <Text style={styles.label}>Peso: {pet.weight} kg</Text>
@@ -76,6 +86,20 @@ export default function PetDetailScreen() {
 }
 
 const styles = StyleSheet.create({
+  headerCol: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 18,
+  },
+  iconCircle: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: Theme.colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+  },
   container: { flex: 1, padding: 24, backgroundColor: Theme.colors.background },
   error: { fontSize: 18, color: Theme.colors.error, textAlign: "center", marginTop: 40 },
   title: { fontSize: 28, fontWeight: "bold", color: Theme.colors.primary, marginBottom: 20, textAlign: "center", letterSpacing: 0.5 },
