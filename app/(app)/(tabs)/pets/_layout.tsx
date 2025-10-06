@@ -15,6 +15,7 @@ export default function PetsLayout() {
       <Stack.Screen name="[id]" options={{ title: "Detalle de Mascota" }} />
       <Stack.Screen name="addPet" options={{ title: "Añadir Mascota" }} />
       <Stack.Screen name="editPet" options={{ title: "Editar Mascota" }} />
+      <Stack.Screen name="addDiet" options={{ title: "Añadir dieta" }} />
     </Stack>
   );
 }
