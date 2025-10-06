@@ -1,12 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Theme } from "@/constants/theme";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { getPetById, deletePet } from "@/src/features/pets/services";
+import { getPetById, deletePet, getDietsForPet, deleteDietFromPet, Diet } from "@/src/features/pets/services";
+
+import { useState } from "react";
 
 export default function PetDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const pet = id ? getPetById(id) : null;
+  const [diets, setDiets] = useState<Diet[]>(id ? getDietsForPet(id) : []);
+
+
+  const handleDeleteDiet = (dietId: string) => {
+    if (!id) return;
+    deleteDietFromPet(id, dietId);
+    setDiets(getDietsForPet(id));
+  };
 
   if (!pet) {
     return (
@@ -27,6 +37,27 @@ export default function PetDetailScreen() {
       <Text style={styles.label}>Tipo: {pet.type}</Text>
       <Text style={styles.label}>Nacimiento: {pet.birthdate}</Text>
       <Text style={styles.label}>Peso: {pet.weight} kg</Text>
+
+      
+      <Text style={[styles.label, { marginTop: 24, fontWeight: "bold" }]}>Dietas</Text>
+      {diets.length === 0 ? (
+        <Text style={{ color: Theme.colors.text, marginBottom: 8 }}>No hay dietas registradas.</Text>
+      ) : (
+        diets.map((diet) => (
+          <View key={diet.id} style={styles.dietItem}>
+            <Text style={styles.dietText}>🍽️ {diet.foodName} | {diet.kgPerDay} kg/día | {diet.price}€</Text>
+            <TouchableOpacity onPress={() => handleDeleteDiet(diet.id)} style={styles.dietDeleteBtn}>
+              <Text style={styles.dietDeleteText}>Eliminar</Text>
+            </TouchableOpacity>
+          </View>
+        ))
+      )}
+      <TouchableOpacity
+        style={styles.addDietBtn}
+        onPress={() => router.push({ pathname: "/(app)/(tabs)/pets/addDiet", params: { id } })}
+      >
+        <Text style={styles.addDietBtnText}>+ Añadir dieta</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.buttonPrimary}
@@ -62,4 +93,35 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: { color: Theme.colors.card, textAlign: "center", fontWeight: "bold" },
+  dietItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: Theme.colors.card,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 8,
+  },
+  dietText: { color: Theme.colors.text, fontSize: 16 },
+  dietDeleteBtn: {
+    backgroundColor: Theme.colors.error,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginLeft: 8,
+  },
+  dietDeleteText: { color: Theme.colors.card, fontWeight: "bold" },
+  addDietBtn: {
+    backgroundColor: Theme.colors.primary,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    alignSelf: "flex-start",
+    marginBottom: 16,
+  },
+  addDietBtnText: {
+    color: Theme.colors.card,
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });

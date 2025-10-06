@@ -5,8 +5,8 @@ export function Input(props: TextInputProps & { style?: any }) {
   return (
     <TextInput
       {...props}
-      style={[styles.input, props.style]}
-  placeholderTextColor={Theme.colors.text}
+      style={[styles.input, { color: Theme.colors.text }, props.style]}
+      placeholderTextColor={Theme.colors.text}
     />
   );
 }
