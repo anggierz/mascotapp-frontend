@@ -1,33 +1,76 @@
-
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, Platform } from "react-native";
 import { Theme } from "@/constants/theme";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useReminders } from "@/src/hooks/useReminders";
 import { Reminder } from "@/src/features/reminders/services";
 import { getPetById } from "@/src/features/pets/services";
 import { ReminderForm } from "@/src/components/ReminderForm";
+import { requestNotificationPermissions, setupNotificationChannel, scheduleReminderNotification } from "@/src/utils/notifications";
 
 export default function RemindersScreen() {
+  // TODO: Eliminar este boton para trigger de notificacion de prueba
+  const handleTestNotification = async () => {
+    const now = new Date();
+    const date = new Date(now.getTime() + 5 * 1000); // 5s
+    await scheduleReminderNotification({
+      title: 'Test Notification',
+      body: 'This is a test notification scheduled for 5 seconds from now.',
+      date,
+    });
+    alert('Test notification scheduled for 5 seconds from now.');
+  };
   const { reminders, addReminder, updateReminder, deleteReminder } = useReminders();
   const [modalVisible, setModalVisible] = useState(false);
   const [editReminder, setEditReminder] = useState<Reminder | null>(null);
 
-  const handleAdd = (data: Omit<Reminder, "id">) => {
+  useEffect(() => {
+    requestNotificationPermissions();
+    setupNotificationChannel();
+  }, []);
+
+  const handleAdd = async (data: Omit<Reminder, "id">) => {
     addReminder(data);
     setModalVisible(false);
+    
+    if (!data.isRecurrent && data.date) {
+      const pet = getPetById(data.petId);
+      await scheduleReminderNotification({
+        title: `Recordatorio: ${data.name}`,
+        body: pet ? `Para ${pet.name}` : "Mascota",
+        date: new Date(data.date),
+      });
+    }
   };
 
-  const handleEdit = (data: Omit<Reminder, "id">) => {
+  const handleEdit = async (data: Omit<Reminder, "id">) => {
     if (editReminder) {
       updateReminder(editReminder.id, data);
       setEditReminder(null);
       setModalVisible(false);
+      
+      if (!data.isRecurrent && data.date) {
+        const pet = getPetById(data.petId);
+        await scheduleReminderNotification({
+          title: `Recordatorio: ${data.name}`,
+          body: pet ? `Para ${pet.name}` : "Mascota",
+          date: new Date(data.date),
+        });
+      }
     }
   };
 
   return (
     <View style={styles.container}>
+      {/* // TODO: Eliminar este boton para trigger de notificacion de prueba*/}
+      <TouchableOpacity
+        style={{ backgroundColor: 'orange', padding: 12, margin: 16, borderRadius: 8 }}
+        onPress={handleTestNotification}
+      >
+        <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>
+          TEST: Notificacion
+        </Text>
+      </TouchableOpacity>
   <Text style={styles.title}>Recordatorios Activos</Text>
       <FlatList
         data={reminders}
