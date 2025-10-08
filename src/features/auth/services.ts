@@ -1,11 +1,28 @@
-export type RegisterPayload = {
-  name: string;
-  email: string;
-  password: string;
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerUser, loginUser } from './api';
+import { RegisterPayload, LoginPayload } from './types';
 
-export function mockRegister(payload: RegisterPayload) {
-  console.log("Registrando usuario (mock):", payload);
-  // TODO: implementar registro real
-  return { success: true, userId: "mock-user-123" };
+export async function register(payload: RegisterPayload) {
+  const data = await registerUser(payload);
+  if (data.token) {
+    await AsyncStorage.setItem('authToken', data.token);
+  }
+  return data;
+}
+
+export async function login(payload: LoginPayload) {
+  console.log(payload);
+  const data = await loginUser(payload);
+  if (data.token) {
+    await AsyncStorage.setItem('authToken', data.token);
+  }
+  return data;
+}
+
+export async function logout() {
+  await AsyncStorage.removeItem('authToken');
+}
+
+export async function getStoredToken() {
+  return AsyncStorage.getItem('authToken');
 }
